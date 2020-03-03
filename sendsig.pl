@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-foreach $filename (@ARGV) {
+foreach $filename (@ARGV[0]) {
   open(COUNT,"grep -c \"^-- \$\" $filename |");
   $max = <COUNT>;
   chomp $max;
@@ -17,29 +17,24 @@ foreach $filename (@ARGV) {
     }
   }
 
-  $output = "\n,---------------------------------<";
-  for ($empty = 3-length($nr); $empty > 0; $empty--) {
-    $output .= " ";
-  }
-  $output .= $nr . " of " . $max;
-  $output .=">-----------------------------------.\n";
-
+  $output .= "HARDY POTTINGER <";
+  $output .= @ARGV[1];
+  $output .= ">\n";
+  $output .= "E7CF EB74 A15B 6C82\n";
+  $output .= "orcid.org/0000-0001-8549-9354";
+  $output .= "\n\n";
 
   while(true) {
     $line = <FILE>;
+    chomp $line;
     if ($line =~ /^-- $/) {
       last;
     } else {
       chomp $line;
-      $line = "|" . $line;
-      for ($empty = 81-length($line); $empty > 0; $empty--) {
-        $line .= " ";
-      }
-      $line .= "|\n"; 
+      $line .= "\n";
       $output .= $line;
     }
   }
-  $output .= "\`--------------------------------------------------------------------------------´\n";
   print $output;
 
 #  $smtp = Net::SMTP->new('mailhost');
